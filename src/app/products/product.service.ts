@@ -9,9 +9,9 @@ import { Product } from './product';
   providedIn: 'root'
 })
 export class ProductService {
-  private productsUrl = 'api/products';
+  private productsUrl = 'api/productsr';
   private suppliersUrl = 'api/suppliers';
-  
+
   constructor(private http: HttpClient) { }
 
   getProducts(): Observable<Product[]> {
