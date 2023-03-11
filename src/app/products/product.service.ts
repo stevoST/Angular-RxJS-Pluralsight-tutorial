@@ -9,7 +9,7 @@ import { Product } from './product';
   providedIn: 'root'
 })
 export class ProductService {
-  private productsUrl = 'api/productsr';
+  private productsUrl = 'api/products';
   private suppliersUrl = 'api/suppliers';
 
   constructor(private http: HttpClient) { }
