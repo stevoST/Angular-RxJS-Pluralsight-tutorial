@@ -16,12 +16,12 @@ export class ProductListAltComponent {
 
   products: Product[] = [];
 
-  products$ = this.productService.products$.pipe(
+  products$ = this.productService.productsWithCategory$.pipe(
     catchError(err => {
       this.errorMessage = err;
       return EMPTY;
     })
-  )
+  );
 
   constructor(private productService: ProductService) { }
 
