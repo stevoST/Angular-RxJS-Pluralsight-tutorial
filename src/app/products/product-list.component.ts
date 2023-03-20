@@ -1,9 +1,7 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 
-import {BehaviorSubject, catchError, combineLatest, EMPTY, filter, map, Observable, of, startWith, Subject} from 'rxjs';
-import {ProductCategory} from '../product-categories/product-category';
+import {BehaviorSubject, catchError, combineLatest, EMPTY, map, Subject} from 'rxjs';
 
-import {Product} from './product';
 import {ProductService} from './product.service';
 import {ProductCategoryService} from "../product-categories/product-category.service";
 
@@ -14,7 +12,8 @@ import {ProductCategoryService} from "../product-categories/product-category.ser
 })
 export class ProductListComponent {
   pageTitle = 'Product List';
-  errorMessage = '';
+  private errorMessageSubject = new Subject<string>();
+  errorMessage$ = this.errorMessageSubject.asObservable();
 
   // another approach to set initial value
 
@@ -37,14 +36,14 @@ export class ProductListComponent {
           selectedCategoryId ? product.categoryId === selectedCategoryId : true
     )),
   catchError( err => {
-    this.errorMessage = err;
+    this.errorMessageSubject.next(err);
     return EMPTY;
     })
   );
 
   categories$ = this.productCategoryService.productCategories$.pipe(
     catchError(err => {
-      this.errorMessage = err;
+      this.errorMessageSubject.next(err);
       return EMPTY;
     })
   );
